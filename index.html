@@ -218,19 +218,18 @@
             }
 
             work() {
-                if (this.ants.length === 0) {
-                    return "No ants here. Did you work them to death?";
-                }
-                let aliveAnts = this.ants.filter(ant => ant.health > 0);
-                this.ants.forEach(ant => {
-                    ant.health -= 20;
-                    if (ant.health <= 0) {
-                        aliveAnts = aliveAnts.filter(a => a !== ant);
-                    }
-                });
-                this.ants = aliveAnts;
-                return `${this.ants.length} ants starting work!`;
-            }
+    const initialAntCount = this.ants.length;
+    if (initialAntCount === 0) {
+      return "No ants here. Did you work them to death?";
+    }
+    
+    this.ants = this.ants.filter(ant => {
+      ant.health -= 20;
+      return ant.health > 0;
+    });
+
+    return `${initialAntCount} ants starting work!`;
+  }
 
             feed(name) {
                 const foundAnts = this.ants.filter(ant => ant.name === name);
